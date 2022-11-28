@@ -25,7 +25,7 @@ app.get("/all", (req, res) => {
 });
 
 app.post("/create", (req, res) => {
-  console.log(req.body);
+  
   const form = req.body;
 
   dadosProcesso.push(form);
@@ -35,8 +35,13 @@ app.post("/create", (req, res) => {
 app.put("/edit/:id", (req, res) => {
   console.log(req.params);
     const {id} = req.params;
-
-  return res.status(201).json(dadosProcesso);
+    const form = req.body;
+    const editByID = dadosProcesso.find((processo) => processo.id === id);
+    const index = dadosProcesso.indexOf(editByID);
+  
+    dadosProcesso.splice(index, 1, form);
+  
+    return res.status(202).json(dadosProcesso);
 });
 
 app.delete("/delete/:id", (req, res) => {
