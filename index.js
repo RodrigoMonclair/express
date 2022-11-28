@@ -24,6 +24,12 @@ app.get("/all", (req, res) => {
   return res.status(200).json(dadosProcesso);
 });
 
+app.get("/processo/:id", (req, res)=>{
+    const { id } = req.params;
+    const processoConsultado = dadosProcesso.filter((processo) => processo.id === id)
+    return res.status(200).json(processoConsultado)
+})
+
 app.post("/create", (req, res) => {
   
   const form = req.body;
