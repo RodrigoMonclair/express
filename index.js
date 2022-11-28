@@ -35,15 +35,15 @@ app.post("/create", (req, res) => {
 app.put("/edit/:id", (req, res) => {
   console.log(req.params);
     const {id} = req.params;
-    
+
   return res.status(201).json(dadosProcesso);
 });
 
 app.delete("/delete/:id", (req, res) => {
-  console.log(req.params); // req. params-> é um objeto e por isso pode ser desconstruído
+  
   const { id } = req.params;
 
-  const deleteByID = dadosProcesso.find((user) => user.id === id);
+  const deleteByID = dadosProcesso.find((processo) => processo.id === id);
   const index = dadosProcesso.indexOf(deleteByID);
 
   dadosProcesso.splice(index, 1);
