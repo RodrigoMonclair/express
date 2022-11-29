@@ -32,17 +32,37 @@ app.get("/processo/:id", (req, res) => {
   return res.status(200).json(processoConsultado);
 });
 
-app.get("/status/open", (req,res)=>{
-    const processosAbertos = dadosProcesso.filter((processo)=> processo.status==="Em andamento")
+app.get("/status/open", (req, res) => {
+  const processosAbertos = dadosProcesso.filter(
+    (processo) => processo.status === "Em andamento"
+  );
 
-    return res.status(200).json(processosAbertos)
-})
+  return res.status(200).json(processosAbertos);
+});
 
-app.get("/status/close", (req,res)=>{
-    const processosConcluidos = dadosProcesso.filter((processo)=> processo.status==="Concluidos")
+app.get("/status/close", (req, res) => {
+  const processosConcluidos = dadosProcesso.filter(
+    (processo) => processo.status === "Concluidos"
+  );
 
-    return res.status(200).json(processosConcluidos)
-})
+  return res.status(200).json(processosConcluidos);
+});
+
+app.get("/setor/:setor", (req, res) => {
+  const { setor } = req.params;
+  const processoPorSetor = dadosProcesso.filter(
+    (processo) => processo.setor === setor
+  );
+
+  return res.status(200).json(processoPorSetor);
+});
+
+app.get("/random", (req, res) => {
+  const processoAleatorio =
+    dadosProcesso[Math.round(Math.random()*dadosProcesso.length)- 1];
+
+  return res.status(200).json(processoAleatorio);
+});
 
 app.post("/create", (req, res) => {
   const form = req.body;
