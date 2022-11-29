@@ -39,7 +39,7 @@ app.post("/create", (req, res) => {
 });
 
 app.put("/edit/:id", (req, res) => {
-  console.log(req.params);
+  
     const {id} = req.params;
     const form = req.body;
     const editByID = dadosProcesso.find((processo) => processo.id === id);
@@ -49,6 +49,18 @@ app.put("/edit/:id", (req, res) => {
   
     return res.status(202).json(dadosProcesso);
 });
+
+app.put("/addComment/:id", (req, res)=>{
+    console.log(req.body)
+    const {id} = req.params
+
+    const updateComment = dadosProcesso.find((processo)=> processo.id === id)
+    const index = dadosProcesso.indexOf(updateComment)
+
+    dadosProcesso[index]={...updateComment, ...req.body}
+
+    return res.status(202).json(dadosProcesso[index])
+})
 
 app.delete("/delete/:id", (req, res) => {
   
