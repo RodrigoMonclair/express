@@ -24,14 +24,21 @@ app.get("/all", (req, res) => {
   return res.status(200).json(dadosProcesso);
 });
 
-app.get("/processo/:id", (req, res)=>{
-    const { id } = req.params;
-    const processoConsultado = dadosProcesso.filter((processo) => processo.id === id)
-    return res.status(200).json(processoConsultado)
+app.get("/processo/:id", (req, res) => {
+  const { id } = req.params;
+  const processoConsultado = dadosProcesso.filter(
+    (processo) => processo.id === id
+  );
+  return res.status(200).json(processoConsultado);
+});
+
+app.get("/status/open", (req,res)=>{
+    const processosAbertos = dadosProcesso.filter((processo)=> processo.status==="Em andamento")
+
+    return res.status(200).json(processosAbertos)
 })
 
 app.post("/create", (req, res) => {
-  
   const form = req.body;
 
   dadosProcesso.push(form);
@@ -39,31 +46,29 @@ app.post("/create", (req, res) => {
 });
 
 app.put("/edit/:id", (req, res) => {
-  
-    const {id} = req.params;
-    const form = req.body;
-    const editByID = dadosProcesso.find((processo) => processo.id === id);
-    const index = dadosProcesso.indexOf(editByID);
-  
-    dadosProcesso.splice(index, 1, form);
-  
-    return res.status(202).json(dadosProcesso);
+  const { id } = req.params;
+  const form = req.body;
+  const editByID = dadosProcesso.find((processo) => processo.id === id);
+  const index = dadosProcesso.indexOf(editByID);
+
+  dadosProcesso.splice(index, 1, form);
+
+  return res.status(202).json(dadosProcesso);
 });
 
-app.put("/addComment/:id", (req, res)=>{
-    console.log(req.body)
-    const {id} = req.params
+app.put("/addComment/:id", (req, res) => {
+  console.log(req.body);
+  const { id } = req.params;
 
-    const updateComment = dadosProcesso.find((processo)=> processo.id === id)
-    const index = dadosProcesso.indexOf(updateComment)
+  const updateComment = dadosProcesso.find((processo) => processo.id === id);
+  const index = dadosProcesso.indexOf(updateComment);
 
-    dadosProcesso[index]={...updateComment, ...req.body}
+  dadosProcesso[index] = { ...updateComment, ...req.body };
 
-    return res.status(202).json(dadosProcesso[index])
-})
+  return res.status(202).json(dadosProcesso[index]);
+});
 
 app.delete("/delete/:id", (req, res) => {
-  
   const { id } = req.params;
 
   const deleteByID = dadosProcesso.find((processo) => processo.id === id);
