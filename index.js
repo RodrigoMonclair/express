@@ -38,6 +38,12 @@ app.get("/status/open", (req,res)=>{
     return res.status(200).json(processosAbertos)
 })
 
+app.get("/status/close", (req,res)=>{
+    const processosConcluidos = dadosProcesso.filter((processo)=> processo.status==="Concluidos")
+
+    return res.status(200).json(processosConcluidos)
+})
+
 app.post("/create", (req, res) => {
   const form = req.body;
 
